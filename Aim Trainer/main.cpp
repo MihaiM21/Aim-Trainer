@@ -12,6 +12,8 @@ int main()
     srand((unsigned)time(NULL));
 
     int razaCerc = 20;
+    int scor = 0;
+
     RenderWindow window(VideoMode(1280, 720), "Aim trainer game <-> Made by Mihai");
     window.setMouseCursorVisible(false);
 
@@ -60,6 +62,8 @@ int main()
             if (targets[i].getGlobalBounds().intersects(aim.getGlobalBounds())
                 && Mouse::isButtonPressed(Mouse::Left)) {
                 targets.erase(targets.begin() + i);
+                scor++;
+                text.setString(to_string(scor));
             }
             
         }
