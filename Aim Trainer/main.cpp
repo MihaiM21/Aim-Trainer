@@ -12,7 +12,7 @@ int main()
     srand((unsigned)time(NULL));
 
     int razaCerc = 20;
-    RenderWindow window(VideoMode(1280, 720), "Tetris game <-> Made by Mihai");
+    RenderWindow window(VideoMode(1280, 720), "Aim trainer game <-> Made by Mihai");
     window.setMouseCursorVisible(false);
 
     CircleShape aim(10);
