@@ -11,11 +11,14 @@ int main()
     //Random number stuff
     srand((unsigned)time(NULL));
 
+    //Raza for spawner
     int razaCerc = 20;
     int scor = 0;
 
     RenderWindow window(VideoMode(1280, 720), "Aim trainer game <-> Made by Mihai");
     window.setMouseCursorVisible(false);
+    window.setVerticalSyncEnabled(true);
+ 
 
     CircleShape aim(10);
     aim.setFillColor(Color::Red);
@@ -42,7 +45,7 @@ int main()
 
     bool canSpawn = true;
     Clock clock0;
-
+    
     vector<CircleShape> targets;
 
     while (window.isOpen())
@@ -53,7 +56,7 @@ int main()
             if (event.type == Event::Closed)
                 window.close();
         }
-
+        
         aim.setPosition(Mouse::getPosition(window).x, Mouse::getPosition(window).y);
 
         //Spawning objects at random positions
@@ -85,7 +88,6 @@ int main()
         window.draw(border);
         for (int i = 0; i < targets.size(); i++) {
             window.draw(targets[i]);
-            
         }
         window.display();
 
