@@ -25,14 +25,22 @@ int main()
     border.setPosition(0, 720);
     border.setFillColor(Color::White);
 
+    //Score text
     Font font;
     font.loadFromFile("cour.ttf");
-    Text text;
-    text.setFont(font);
-    text.setPosition(640, 0);
-    text.setString("Scor");
-    text.setFillColor(Color::White);
+    Text scoreText;
+    scoreText.setFont(font);
+    scoreText.setPosition(640, 0);
+    scoreText.setString("Score:");
+    scoreText.setFillColor(Color::White);
 
+    Text scoreNr;
+    scoreNr.setFont(font);
+    scoreNr.setPosition(750, 0);
+    scoreNr.setFillColor(Color::White);
+
+
+    bool canSpawn = true;
     Clock clock0;
 
     vector<CircleShape> targets;
@@ -49,12 +57,13 @@ int main()
         aim.setPosition(Mouse::getPosition(window).x, Mouse::getPosition(window).y);
 
         //Spawning objects at random positions
-        if (clock0.getElapsedTime().asSeconds() > 1) {
+        if (clock0.getElapsedTime().asSeconds() > 0.75) {
             int randomX = rand() % 1280;
             int randomY = rand() % 720;
             targets.push_back(CircleShape());
             targets.back().setRadius(razaCerc);
             targets.back().setPosition(randomX, randomY);
+            canSpawn = false;
             clock0.restart();
         }
 
@@ -62,15 +71,17 @@ int main()
             if (targets[i].getGlobalBounds().intersects(aim.getGlobalBounds())
                 && Mouse::isButtonPressed(Mouse::Left)) {
                 targets.erase(targets.begin() + i);
+                canSpawn = true;
                 scor++;
-                text.setString(to_string(scor));
+                scoreNr.setString(to_string(scor));
             }
             
         }
 
         window.clear();
         window.draw(aim);
-        window.draw(text);
+        window.draw(scoreText);
+        window.draw(scoreNr);
         window.draw(border);
         for (int i = 0; i < targets.size(); i++) {
             window.draw(targets[i]);
