@@ -2,6 +2,11 @@
 #include <time.h>
 #include <Windows.h>
 #include <iostream>
+
+#define targetSize 20
+#define height 1280
+#define width 720
+#define spawnTimeDelay 0.75
 using namespace sf;
 using namespace std;
 
@@ -11,11 +16,9 @@ int main()
     //Random number stuff
     srand((unsigned)time(NULL));
 
-    //Raza for spawner
-    int razaCerc = 20;
     int scor = 0;
 
-    RenderWindow window(VideoMode(1280, 720), "Aim trainer game <-> Made by Mihai");
+    RenderWindow window(VideoMode(height, width), "Aim trainer game <-> Made by Mihai");
     window.setMouseCursorVisible(false);
     window.setVerticalSyncEnabled(true);
  
@@ -42,10 +45,16 @@ int main()
     scoreNr.setPosition(750, 0);
     scoreNr.setFillColor(Color::White);
 
+    Text timeCounter;
+    timeCounter.setFont(font);
+    timeCounter.setPosition(10, 10);
+    timeCounter.setFillColor(Color::White);
 
     bool canSpawn = true;
     Clock clock0;
-    
+    Clock clock1;
+   
+
     vector<CircleShape> targets;
 
     while (window.isOpen())
@@ -60,15 +69,20 @@ int main()
         aim.setPosition(Mouse::getPosition(window).x, Mouse::getPosition(window).y);
 
         //Spawning objects at random positions
-        if (clock0.getElapsedTime().asSeconds() > 0.75) {
-            int randomX = rand() % 1280;
-            int randomY = rand() % 720;
-            targets.push_back(CircleShape());
-            targets.back().setRadius(razaCerc);
-            targets.back().setPosition(randomX, randomY);
-            canSpawn = false;
+        if (clock0.getElapsedTime().asSeconds() > spawnTimeDelay) {
+            if(canSpawn) {
+                int randomX = rand() % (1280- targetSize);
+                int randomY = rand() % (720 - targetSize);
+                targets.push_back(CircleShape());
+                targets.back().setRadius(targetSize);
+                targets.back().setPosition(randomX, randomY);
+                canSpawn = false;
+            }
+            
             clock0.restart();
         }
+
+        timeCounter.setString(to_string(clock1.getElapsedTime().asSeconds()));
 
         for (int i = 0; i < targets.size(); i++) {
             if (targets[i].getGlobalBounds().intersects(aim.getGlobalBounds())
@@ -86,6 +100,7 @@ int main()
         window.draw(scoreText);
         window.draw(scoreNr);
         window.draw(border);
+        window.draw(timeCounter);
         for (int i = 0; i < targets.size(); i++) {
             window.draw(targets[i]);
         }
