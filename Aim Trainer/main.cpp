@@ -7,6 +7,7 @@
 #define height 1280
 #define width 720
 #define spawnTimeDelay 0.75
+#define cursorSize 8
 using namespace sf;
 using namespace std;
 
@@ -23,13 +24,8 @@ int main()
     window.setVerticalSyncEnabled(true);
  
 
-    CircleShape aim(10);
+    CircleShape aim(cursorSize);
     aim.setFillColor(Color::Red);
-
-    //Bottom margin
-    RectangleShape border(Vector2f(1300, 50));
-    border.setPosition(0, 720);
-    border.setFillColor(Color::White);
 
     //Score text
     Font font;
@@ -53,7 +49,6 @@ int main()
     bool canSpawn = true;
     Clock clock0;
     Clock clock1;
-   
 
     vector<CircleShape> targets;
 
@@ -68,20 +63,20 @@ int main()
         
         aim.setPosition(Mouse::getPosition(window).x, Mouse::getPosition(window).y);
 
-        //Spawning objects at random positions
+        // Spawning objects at random positions
         if (clock0.getElapsedTime().asSeconds() > spawnTimeDelay) {
             if(canSpawn) {
-                int randomX = rand() % (1280- targetSize);
-                int randomY = rand() % (720 - targetSize);
+                int randomX = rand() % (width - targetSize * 2);
+                int randomY = rand() % (height - targetSize * 2);
                 targets.push_back(CircleShape());
                 targets.back().setRadius(targetSize);
                 targets.back().setPosition(randomX, randomY);
                 canSpawn = false;
             }
-            
             clock0.restart();
         }
 
+        // Updating time text
         timeCounter.setString(to_string(clock1.getElapsedTime().asSeconds()));
 
         for (int i = 0; i < targets.size(); i++) {
@@ -99,7 +94,6 @@ int main()
         window.draw(aim);
         window.draw(scoreText);
         window.draw(scoreNr);
-        window.draw(border);
         window.draw(timeCounter);
         for (int i = 0; i < targets.size(); i++) {
             window.draw(targets[i]);
