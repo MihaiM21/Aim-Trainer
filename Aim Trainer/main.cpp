@@ -3,7 +3,6 @@
 #include <Windows.h>
 #include <iostream>
 #include "Menu.h"
-#include "main.h"
 
 #define targetSize 20
 #define width 1280
