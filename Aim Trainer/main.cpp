@@ -82,15 +82,27 @@ int main()
         window.clear();
         if (isMenuOn) {
             // Checking if Start button is pressed
-            if (aim.getGlobalBounds().intersects(startButton.getGlobalBounds())
-                && Mouse::isButtonPressed(Mouse::Left)) {
-                isMenuOn = false;
+            if (aim.getGlobalBounds().intersects(startButton.getGlobalBounds())) {
+                menu.startButton.setOutlineThickness(5);
+                menu.startButton.setOutlineColor(Color::Red);
+                if (Mouse::isButtonPressed(Mouse::Left)) {
+                    isMenuOn = false;
+                }
+            }
+            else {
+                menu.startButton.setOutlineThickness(0);
             }
 
             // Checking if exit button is pressed
-            if (aim.getGlobalBounds().intersects(exitButton.getGlobalBounds())
-                && Mouse::isButtonPressed(Mouse::Left)) {
-                window.close();
+            if (aim.getGlobalBounds().intersects(exitButton.getGlobalBounds())) {
+                menu.exitButton.setOutlineThickness(5);
+                menu.exitButton.setOutlineColor(Color::Red);
+                if (Mouse::isButtonPressed(Mouse::Left)) {
+                    window.close();
+                }
+            }
+            else {
+                menu.exitButton.setOutlineThickness(0);
             }
 
             window.draw(menu.startButton);
@@ -134,6 +146,14 @@ int main()
                     scoreNr.setString(to_string(scor));
                 }
 
+            }
+
+            // Cursor color changing when LMB pressed
+            if (Mouse::isButtonPressed(Mouse::Left)) {
+                aim.setFillColor(Color::Green);
+            }
+            else {
+                aim.setFillColor(Color::Red);
             }
 
             window.draw(scoreText);
