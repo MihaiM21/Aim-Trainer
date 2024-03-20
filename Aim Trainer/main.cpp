@@ -3,12 +3,13 @@
 #include <Windows.h>
 #include <iostream>
 #include "Menu.h"
+#include "iniReader.h"
 
-#define targetSize 20
-#define windowWidth 1280
-#define windowHeight 720
-#define spawnTimeDelay 0.1
-#define cursorSize 8
+#define targetSize "target_size"
+#define windowWidth "windowWidth"
+#define windowHeight "windowHeight"
+#define spawnTimeDelay "spawn_time_delay"
+#define cursorSize "cursor_size"
 
 
 using namespace sf;
@@ -17,15 +18,19 @@ using namespace std;
 
 int main()
 {
+    reader iniReader;
+    iniReader._init_reader();
+
     //Random number stuff
     srand((unsigned)time(NULL));
     int scor = 0;
-
-    RenderWindow window(VideoMode(windowWidth, windowHeight), "Aim trainer game <-> Made by Mihai");
+    
+    RenderWindow window(VideoMode(iniReader.iniParseInt(windowWidth),iniReader.iniParseInt(windowHeight)),
+        "Aim trainer game <-> Made by Mihai");
     window.setMouseCursorVisible(false);
     window.setVerticalSyncEnabled(true);
  
-    CircleShape aim(cursorSize);
+    CircleShape aim(iniReader.iniParseInt(cursorSize));
     aim.setFillColor(Color::Red);
 
     //Score text
@@ -33,7 +38,7 @@ int main()
     font.loadFromFile("cour.ttf");
     Text scoreText;
     scoreText.setFont(font);
-    scoreText.setPosition(windowWidth/2, 0);
+    scoreText.setPosition(iniReader.iniParseInt(windowWidth)/2, 0);
     scoreText.setString("Score:");
     scoreText.setFillColor(Color::White);
 
@@ -54,12 +59,13 @@ int main()
 
     vector<CircleShape> targets;
 
+    
     // Starting the menu
     menu menu;
     menu._init();
     RectangleShape startButton = menu.startButton;
     RectangleShape exitButton = menu.exitButton;
-
+    
     while (window.isOpen())
     {
         Event event;
@@ -72,10 +78,6 @@ int main()
         aim.setPosition(Mouse::getPosition(window).x, Mouse::getPosition(window).y);
 
         
-        
-        
-
-
 
         window.clear();
         if (isMenuOn) {
@@ -108,12 +110,12 @@ int main()
             }
 
             // Spawning objects at random positions
-            if (clock0.getElapsedTime().asSeconds() > spawnTimeDelay) {
+            if (clock0.getElapsedTime().asSeconds() > iniReader.iniParseFloat(spawnTimeDelay)) {
                 if (canSpawn) {
-                    int randomX = rand() % (windowWidth - targetSize * 2);
-                    int randomY = rand() % (windowHeight - targetSize * 2);
+                    int randomX = rand() % (iniReader.iniParseInt(windowWidth)-iniReader.iniParseInt(targetSize) * 2);
+                    int randomY = rand() % (iniReader.iniParseInt(windowHeight) - iniReader.iniParseInt(targetSize) * 2);
                     targets.push_back(CircleShape());
-                    targets.back().setRadius(targetSize);
+                    targets.back().setRadius(iniReader.iniParseInt(targetSize));
                     targets.back().setPosition(randomX, randomY);
                     canSpawn = false;
                 }
