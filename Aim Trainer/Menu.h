@@ -31,6 +31,7 @@ private:
 };
 
 void menu::_init() {
+	iniReader._init_reader();
 	// Init start button
 	menu::startButton.setSize(Vector2f(buttonWidth, buttonHeight));
 	menu::startButton.setFillColor(Color::White);
