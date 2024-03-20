@@ -2,10 +2,13 @@
 #define MENU_H
 
 #define targetSize 20
-#define width 1280
-#define height 720
+#define windowWidth 1280
+#define windowHeight 720
 #define spawnTimeDelay 0.1
 #define cursorSize 8
+
+#define buttonWidth 250
+#define buttonHeight 60
 
 #include "iostream"
 #include <SFML/Graphics.hpp>
@@ -16,9 +19,9 @@ class menu
 {
 	
 public:
-	RectangleShape startButton;
+	RectangleShape startButton, exitButton;
 	Font textFont;
-	Text startText;
+	Text startText, exitText;
 	void _init();
 
 private:
@@ -26,16 +29,27 @@ private:
 };
 
 void menu::_init() {
-	// Init Button image
-	menu::startButton.setSize(Vector2f(250, 80));
+	// Init start button
+	menu::startButton.setSize(Vector2f(buttonWidth, buttonHeight));
 	menu::startButton.setFillColor(Color::White);
-	menu::startButton.setPosition(100, 100);
+	menu::startButton.setPosition(windowWidth/2 - buttonWidth/2, windowHeight/2);
 	// Init text for start button
 	menu::textFont.loadFromFile("cour.ttf");
 	menu::startText.setFont(menu::textFont);
-	menu::startText.setPosition(100, 100);
+	// 43 half of text width
+	menu::startText.setPosition(windowWidth/2 - 43, windowHeight / 2 + 7);
 	menu::startText.setFillColor(Color::Red);
-	menu::startText.setString("Start");
+	menu::startText.setString("START");
+
+	// Init exit button
+	menu::exitButton.setSize(Vector2f(buttonWidth, buttonHeight));
+	menu::exitButton.setFillColor(Color::White);
+	menu::exitButton.setPosition(windowWidth / 2 - buttonWidth / 2, windowHeight / 2 + 100);
+	// Init text for exit button
+	menu::exitText.setFont(menu::textFont);
+	menu::exitText.setPosition(windowWidth / 2 - 36, windowHeight / 2 + 100 + 7);
+	menu::exitText.setFillColor(Color::Red);
+	menu::exitText.setString("EXIT");
 }
 
 
