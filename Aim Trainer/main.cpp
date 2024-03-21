@@ -54,6 +54,7 @@ int main()
 
     bool isMenuOn = true;
     bool canSpawn = true;
+    bool endGame = false;
     Clock clock0;
     Clock clock1;
 
@@ -62,7 +63,9 @@ int main()
     
     // Starting the menu
     menu menu;
+    endScreen end;
     menu._init();
+    end._init();
     RectangleShape startButton = menu.startButton;
     RectangleShape exitButton = menu.exitButton;
     
@@ -112,7 +115,7 @@ int main()
             window.draw(aim);
          
         }
-        else {
+        else if (!endGame) {
             if (Keyboard::isKeyPressed(Keyboard::Escape)) {
                 isMenuOn = true;
                 // Reset score
@@ -148,6 +151,10 @@ int main()
 
             }
 
+            // Checking if the game has ended
+            if (clock1.getElapsedTime().asSeconds() >= 5)
+                endGame = true;
+
             // Cursor color changing when LMB pressed
             if (Mouse::isButtonPressed(Mouse::Left)) {
                 aim.setFillColor(Color::Green);
@@ -164,6 +171,15 @@ int main()
             }
             window.draw(aim);
         }
+        else {
+
+            end.changeScore(scor);
+            window.draw(end.panel);
+            window.draw(end.score);
+            window.draw(end.title);
+            window.draw(aim);
+        }
+        
         window.display();
 
     }

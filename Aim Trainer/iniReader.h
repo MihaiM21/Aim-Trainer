@@ -68,7 +68,7 @@ int reader::iniParseInt(const string& KeyArgs) {
     }
     f.clear();
     f.seekg(0);
-    return stol(config);
+    return stoi(config);
 }
 
 #endif

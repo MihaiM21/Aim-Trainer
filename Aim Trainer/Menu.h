@@ -16,6 +16,43 @@
 
 using namespace sf;
 
+class endScreen
+{
+public:
+	void _init();
+	void changeScore(int score);
+	reader iniReader;
+	RectangleShape panel;
+	Font textFont;
+	Text title, score;
+private:
+
+};
+
+void endScreen::_init() {
+	iniReader._init_reader();
+	// Init panel
+	endScreen::panel.setSize(Vector2f(500, 500));
+	endScreen::panel.setFillColor(Color::White);
+	endScreen::panel.setPosition(iniReader.iniParseInt(windowWidth) / 2 - 250, iniReader.iniParseInt(windowHeight) / 2 - 250);
+
+	// Init Text
+	endScreen::textFont.loadFromFile("cour.ttf");
+	endScreen::title.setFont(textFont);
+	endScreen::title.setString("GAME OVER");
+	endScreen::title.setPosition(iniReader.iniParseInt(windowWidth) / 2 - 75, iniReader.iniParseInt(windowHeight) / 2 - 200);
+	endScreen::title.setFillColor(Color::Black);
+
+	endScreen::score.setFont(textFont);
+	endScreen::score.setPosition(iniReader.iniParseInt(windowWidth) / 2, iniReader.iniParseInt(windowHeight) / 2 - 160);
+	endScreen::score.setFillColor(Color::Black);
+}
+
+void endScreen::changeScore(int score) {
+	endScreen::score.setString(to_string(score));
+}
+
+
 class menu
 {
 	
