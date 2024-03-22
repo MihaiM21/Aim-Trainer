@@ -152,7 +152,7 @@ int main()
             }
 
             // Checking if the game has ended
-            if (clock1.getElapsedTime().asSeconds() >= 5)
+            if (clock1.getElapsedTime().asSeconds() >= 60)
                 endGame = true;
 
             // Cursor color changing when LMB pressed
