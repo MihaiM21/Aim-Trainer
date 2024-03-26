@@ -60,6 +60,8 @@ int main()
 
     vector<CircleShape> targets;
 
+    int gameTime = 60;
+
     
     // Starting the menu
     menu menu;
@@ -67,7 +69,9 @@ int main()
     menu._init();
     end._init();
     RectangleShape startButton = menu.startButton;
+    RectangleShape shortButton = menu.shortButton;
     RectangleShape exitButton = menu.exitButton;
+    RectangleShape menuButton = end.menuButton;
     
     while (window.isOpen())
     {
@@ -89,7 +93,9 @@ int main()
                 menu.startButton.setOutlineThickness(5);
                 menu.startButton.setOutlineColor(Color::Red);
                 if (Mouse::isButtonPressed(Mouse::Left)) {
+                    gameTime = 60;
                     isMenuOn = false;
+                    clock1.restart();
                 }
             }
             else {
@@ -108,8 +114,24 @@ int main()
                 menu.exitButton.setOutlineThickness(0);
             }
 
+            // Checking if short game button is pressed
+            if (aim.getGlobalBounds().intersects(shortButton.getGlobalBounds())) {
+                menu.shortButton.setOutlineThickness(5);
+                menu.shortButton.setOutlineColor(Color::Red);
+                if (Mouse::isButtonPressed(Mouse::Left)) {
+                    gameTime = 5;
+                    isMenuOn = false;
+                    clock1.restart();
+                }
+            }
+            else {
+                menu.shortButton.setOutlineThickness(0);
+            }
+
             window.draw(menu.startButton);
             window.draw(menu.startText);
+            window.draw(menu.shortButton);
+            window.draw(menu.shortText);
             window.draw(menu.exitButton);
             window.draw(menu.exitText);
             window.draw(aim);
@@ -152,7 +174,7 @@ int main()
             }
 
             // Checking if the game has ended
-            if (clock1.getElapsedTime().asSeconds() >= 60)
+            if (clock1.getElapsedTime().asSeconds() >= gameTime)
                 endGame = true;
 
             // Cursor color changing when LMB pressed
@@ -173,10 +195,26 @@ int main()
         }
         else {
 
+            // Checking if menu button is pressed
+            if (aim.getGlobalBounds().intersects(menuButton.getGlobalBounds())) {
+                end.menuButton.setOutlineThickness(5);
+                end.menuButton.setOutlineColor(Color::Red);
+                if (Mouse::isButtonPressed(Mouse::Left)){
+                    isMenuOn = true;
+                    endGame = false;
+                    Sleep(100);
+                }
+            }
+            else{
+                end.menuButton.setOutlineThickness(0);
+            }
+
             end.changeScore(scor);
             window.draw(end.panel);
             window.draw(end.score);
             window.draw(end.title);
+            window.draw(end.menuButton);
+            window.draw(end.menuText);
             window.draw(aim);
         }
         
