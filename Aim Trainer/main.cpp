@@ -60,7 +60,7 @@ int main()
 
     vector<CircleShape> targets;
 
-    int gameTime = 60;
+    int gameTime = 30;
 
     
     // Starting the menu
@@ -93,7 +93,7 @@ int main()
                 menu.startButton.setOutlineThickness(5);
                 menu.startButton.setOutlineColor(Color::Red);
                 if (Mouse::isButtonPressed(Mouse::Left)) {
-                    gameTime = 60;
+                    gameTime = 30;
                     isMenuOn = false;
                     clock1.restart();
                 }
@@ -119,7 +119,7 @@ int main()
                 menu.shortButton.setOutlineThickness(5);
                 menu.shortButton.setOutlineColor(Color::Red);
                 if (Mouse::isButtonPressed(Mouse::Left)) {
-                    gameTime = 5;
+                    gameTime = 15;
                     isMenuOn = false;
                     clock1.restart();
                 }
