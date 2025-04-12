@@ -44,7 +44,7 @@ int main()
 
     Text scoreNr;
     scoreNr.setFont(font);
-    scoreNr.setPosition(750, 0);
+    scoreNr.setPosition(iniReader.iniParseInt(windowWidth) / 2 + 120, 0);
     scoreNr.setFillColor(Color::White);
 
     Text timeCounter;
@@ -94,6 +94,7 @@ int main()
                 menu.startButton.setOutlineColor(Color::Red);
                 if (Mouse::isButtonPressed(Mouse::Left)) {
                     gameTime = 30;
+                    scor = 0;
                     isMenuOn = false;
                     clock1.restart();
                 }
@@ -120,6 +121,7 @@ int main()
                 menu.shortButton.setOutlineColor(Color::Red);
                 if (Mouse::isButtonPressed(Mouse::Left)) {
                     gameTime = 15;
+                    scor = 0;
                     isMenuOn = false;
                     clock1.restart();
                 }
